@@ -1,0 +1,18 @@
+You are an expert specializing in phage genomics.
+Your task is to answer single-choice questions by analyzing the given nucleotide sequence and the question.
+Based on the evidence presented in the nucleotide sequence, use your best knowledge of biological principles to determine your answer. 
+Do not copy or restate the full DNA sequence in your response; at most quote short substrings less than 30 characters if needed.
+
+Question: $question$
+
+<sequence>
+$sequence$
+</sequence>
+
+Choices:
+$choices$
+
+Format your answer in the following format, with no extra text before or after: 
+{"answer": "X"}
+
+where X is one of: $options$.
