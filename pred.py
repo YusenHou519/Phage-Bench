@@ -352,7 +352,6 @@ def get_pred(data, args, out_file, rank):
 
             prompt = template.replace('$sequence$', sequence.strip()).replace('$question$', item['question'].strip()).replace('$choices$', item['choices']).replace('$options$', options)
             
-            # 调用 LLM
             output, tokens = query_llm(prompt, model, tokenizer, item, client, args, temperature=0.1)
             if output == '':
                 continue
