@@ -1,10 +1,11 @@
 # <img src="misc/bacteriophage.png" width="35" style="vertical-align: sub; transform: rotate(-12deg);"> PhageBench: Can LLMs Understand Raw Bacteriophage Genomes?
 
+### **🎉🎉🎉 PhageBench was accepted to ACL 2026 Findings! 🤖 meets 🦠!**
+
 <code>All The World's A Phage.</code>
 
 **PhageBench** confronts general-purpose Large Language Models (LLMs) with a fundamental question: **Can models trained on natural language understand the language of life?**
 
-**🎉🎉🎉 PhageBench was accepted to ACL 2026 Findings! 🤖 meets 🦠!**
 
 The intersection of AI and biology is shifting from text analysis to direct genomic decoding. While specialized Genomic Foundation Models (GFMs) require massive pre-training on DNA, PhageBench investigates whether general-purpose LLMs can leverage their inherent reasoning capabilities to interpret raw genomes zero-shot.
 
