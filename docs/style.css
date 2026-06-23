@@ -1,0 +1,454 @@
+/* =====================================================================
+   PhageBench — project page
+   Style ported from the ExplicitShortCut (Distill-style) reference:
+   slate-blue title, blue-grey pill buttons w/ orange hover, green TOC
+   accents, sticky contents sidebar, thin-ruled result tables.
+   ===================================================================== */
+
+:root {
+    --title-slate:   #2f4358;
+    --btn-bg:        #b7c3cb;
+    --btn-text:      #03325c;
+    --btn-border:    #ccdde5;
+    --btn-hover-bg:  #eab682;
+    --accent-green:  rgba(91, 184, 73, 0.85);
+    --active-blue:   #0d6efd;
+    --hairline:      rgba(0, 0, 0, 0.1);
+    --ink:           #1a1a1a;
+    --ink-soft:      #555;
+    --ink-faint:     #777;
+    --shade:         hsl(0, 0%, 97%);
+    --stage-screen:  #5bb849;
+    --stage-qc:      #3b9ed6;
+    --stage-pheno:   #e8a13a;
+    --body-serif:    "Source Serif 4", "Source Serif Pro", Georgia, Cambria, "Times New Roman", serif;
+    --head-sans:     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono:          "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
+
+body {
+    margin: 0;
+    font-family: var(--body-serif);
+    font-size: 1.05rem;
+    line-height: 1.72;
+    color: var(--ink);
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--btn-text); }
+
+h2, h3, h4 { font-family: var(--head-sans); color: var(--title-slate); line-height: 1.25; }
+
+/* ============================ HERO ============================ */
+.header-container {
+    background: #fff;
+    text-align: center;
+    padding: 28px 22px 8px;
+}
+
+.venue-badge {
+    display: inline-block;
+    font-family: var(--head-sans);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #8a5a00;
+    background: #fff3e0;
+    border: 1px solid #f3d39b;
+    border-radius: 20px;
+    padding: 5px 14px;
+    margin-bottom: 18px;
+}
+
+.paper-title {
+    font-family: var(--head-sans);
+    margin: 0 0 0.4em;
+    line-height: 1.2;
+}
+
+.paper-title-icon { display: inline-block; }
+.phage-icon {
+    width: 40px;
+    height: auto;
+    vertical-align: middle;
+    transform: rotate(-12deg);
+    margin-right: 4px;
+}
+
+.paper-title-main {
+    display: inline-block;
+    font-size: 2.1rem;
+    font-weight: 800;
+    color: var(--title-slate);
+    letter-spacing: -0.01em;
+    vertical-align: middle;
+}
+
+.paper-title-sub {
+    display: block;
+    font-size: 1.18rem;
+    font-weight: 500;
+    color: var(--title-slate);
+    margin-top: 0.35em;
+}
+
+.paper-tagline {
+    font-family: var(--body-serif);
+    color: var(--ink-faint);
+    font-size: 1.02rem;
+    margin: 0.2em 0 1.1em;
+}
+
+/* Buttons (pill, orange on hover) */
+.button-container { margin: 8px 0 14px; }
+
+.button-container a.button {
+    display: inline-block;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid var(--btn-border);
+    border-radius: 25px;
+    padding: 9px 22px;
+    margin: 6px;
+    font-family: var(--head-sans);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background-color 0.25s, color 0.25s, transform 0.15s;
+}
+.button-container a.button:hover {
+    background: var(--btn-hover-bg);
+    color: #fff;
+    transform: translateY(-1px);
+}
+.button-icon { margin-right: 4px; }
+
+.header-image { margin-top: 8px; }
+.teaser-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
+/* Two-column hero on larger screens */
+@media (min-width: 820px) {
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 36px;
+        padding: 54px 6vw 30px;
+        max-width: 1280px;
+        margin: 0 auto;
+    }
+    .header-content { flex: 1 1 46%; text-align: left; }
+    .header-image   { flex: 1 1 50%; margin-top: 0; }
+    .paper-title-main { font-size: 2.6rem; }
+    .paper-title-sub  { font-size: 1.32rem; }
+    .teaser-image { box-shadow: 0 6px 26px rgba(0,0,0,0.10); }
+}
+
+/* ============================ BYLINE ============================ */
+.byline {
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 16px 22px 18px;
+    margin: 14px auto 0;
+}
+.byline-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 18px 40px;
+    align-items: flex-start;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.byline-column { text-align: left; }
+.byline-column h3 {
+    margin: 0 0 8px;
+    color: #333;
+    font-size: 0.92rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.byline-column p {
+    font-family: var(--body-serif);
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    margin: 3px 0;
+}
+.author-link { color: var(--ink-soft); text-decoration: none; }
+.author-link:hover { text-decoration: underline; }
+
+/* ============================ ARTICLE LAYOUT ============================ */
+.article {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 30px 22px 10px;
+    display: block;
+}
+
+.content { max-width: 720px; margin: 0 auto; }
+
+/* Sticky table of contents — shown as a left sidebar on wide screens */
+.contents { display: none; }
+
+@media (min-width: 1080px) {
+    .article {
+        display: grid;
+        grid-template-columns: 220px minmax(0, 720px);
+        justify-content: center;
+        column-gap: 40px;
+        align-items: start;
+    }
+    .contents {
+        display: block;
+        position: sticky;
+        top: 28px;
+        padding-right: 22px;
+        border-right: 1px solid var(--hairline);
+    }
+    .content { margin: 0; }
+}
+
+.contents nav h4 {
+    margin: 0 0 0.9em;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-green);
+}
+.contents nav a {
+    display: block;
+    font-family: var(--head-sans);
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.78);
+    text-decoration: none;
+    padding: 4px 0;
+    border-left: 2px solid transparent;
+    padding-left: 10px;
+    margin-left: -12px;
+    transition: color 0.2s, border-color 0.2s;
+}
+.contents nav a:hover { color: var(--title-slate); }
+.contents nav a.active-nav-item {
+    color: var(--active-blue);
+    border-left-color: var(--active-blue);
+}
+
+/* ============================ SECTIONS ============================ */
+section { margin: 0 0 2.6rem; }
+section h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin: 0 0 0.7em;
+    padding-bottom: 0.25em;
+    border-bottom: 2px solid var(--shade);
+}
+section p { margin: 0 0 1em; }
+code {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    background: var(--shade);
+    padding: 1px 5px;
+    border-radius: 4px;
+}
+
+/* Figures */
+figure { margin: 1.4em 0; text-align: center; }
+figure img { max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 6px; }
+figcaption {
+    font-family: var(--body-serif);
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+    line-height: 1.55;
+    margin-top: 0.8em;
+    text-align: center;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.shaded-figure {
+    background: var(--shade);
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 26px 18px;
+    border-radius: 8px;
+}
+.donut-figure { max-width: 440px; }
+
+/* Why-phages reason cards */
+.reason-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px;
+    margin: 1.4em 0;
+}
+.reason-card {
+    background: var(--shade);
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    padding: 18px 18px 6px;
+}
+.reason-emoji { font-size: 1.7rem; line-height: 1; }
+.reason-card h3 { font-size: 1.05rem; margin: 0.5em 0 0.3em; }
+.reason-card p { font-size: 0.93rem; color: var(--ink-soft); }
+
+/* Stage blocks + task cards */
+.stage-block {
+    border-left: 4px solid var(--hairline);
+    padding-left: 16px;
+    margin: 1.4em 0;
+}
+.stage-screening { border-left-color: var(--stage-screen); }
+.stage-qc        { border-left-color: var(--stage-qc); }
+.stage-phenotype { border-left-color: var(--stage-pheno); }
+
+.stage-label {
+    display: inline-block;
+    font-family: var(--head-sans);
+    font-size: 0.74rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    color: #fff;
+}
+.stage-screening .stage-label { background: var(--stage-screen); }
+.stage-qc        .stage-label { background: var(--stage-qc); }
+.stage-phenotype .stage-label { background: var(--stage-pheno); }
+
+.task-card {
+    background: #fff;
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+}
+.task-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; }
+.task-num {
+    font-family: var(--head-sans);
+    font-weight: 800;
+    font-size: 0.85rem;
+    color: #fff;
+    background: var(--title-slate);
+    border-radius: 5px;
+    padding: 1px 7px;
+}
+.task-name { font-family: var(--head-sans); font-weight: 700; color: var(--title-slate); }
+.task-count {
+    margin-left: auto;
+    font-family: var(--head-sans);
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+}
+.task-q { margin: 0.5em 0 0; font-size: 0.95rem; color: var(--ink-soft); }
+
+/* ============================ RESULTS TABLE ============================ */
+.table-scroll { overflow-x: auto; margin: 1.2em 0 0.4em; }
+.display-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-family: var(--head-sans);
+    font-size: 0.9rem;
+    min-width: 560px;
+    width: 100%;
+}
+.display-table th, .display-table td {
+    padding: 7px 10px;
+    text-align: center;
+}
+.display-table thead th {
+    border-top: 2px solid #000;
+    border-bottom: 1px solid #000;
+    font-weight: 700;
+    color: var(--title-slate);
+    vertical-align: bottom;
+}
+.display-table .th-sub { font-weight: 500; font-size: 0.76rem; color: var(--ink-faint); }
+.display-table .left { text-align: left; }
+.display-table tbody tr:last-child td { border-bottom: 2px solid #000; }
+.display-table .group-row td {
+    background: #f0f0f0;
+    font-weight: 700;
+    color: var(--ink);
+    text-align: center;
+    padding: 5px 10px;
+}
+.display-table .baseline-row td { color: var(--ink-faint); }
+.display-table u { text-decoration: underline; }
+.table-caption {
+    text-align: center;
+    font-size: 0.86rem;
+    color: var(--ink-faint);
+    margin-top: 0.7em;
+}
+
+/* Findings */
+.findings-list { padding-left: 1.1em; }
+.findings-list li { margin-bottom: 0.8em; }
+
+/* BibTeX */
+.bibtex {
+    background: var(--shade);
+    border: 1px solid var(--hairline);
+    border-left: 4px solid var(--title-slate);
+    border-radius: 6px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--ink);
+}
+.bibtex code { background: none; padding: 0; font-size: inherit; }
+
+/* ============================ FOOTER ============================ */
+.site-footer {
+    border-top: 1px solid var(--hairline);
+    text-align: center;
+    padding: 26px 22px 40px;
+    color: var(--ink-faint);
+    font-size: 0.9rem;
+}
+.footer-sub { margin-top: 0.3em; color: var(--ink-faint); }
+
+/* Back-to-top */
+.back-to-top {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--btn-bg);
+    color: var(--btn-text);
+    border: 2px solid var(--btn-border);
+    font-size: 1.2rem;
+    line-height: 38px;
+    text-align: center;
+    text-decoration: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s, background-color 0.25s, color 0.25s;
+    z-index: 1000;
+}
+.back-to-top.visible { opacity: 1; pointer-events: auto; }
+.back-to-top:hover { background: var(--btn-hover-bg); color: #fff; }
+
+@media (max-width: 520px) {
+    .paper-title-main { font-size: 1.8rem; }
+    .paper-title-sub  { font-size: 1.05rem; }
+    section h2 { font-size: 1.35rem; }
+    body { font-size: 1rem; }
+}

@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PhageBench: Can LLMs Understand Raw Bacteriophage Genomes?</title>
+    <meta name="description" content="PhageBench — the first benchmark for evaluating whether general-purpose LLMs can understand raw bacteriophage genomes. ACL 2026 Findings.">
+    <meta property="og:title" content="PhageBench: Can LLMs Understand Raw Bacteriophage Genomes?">
+    <meta property="og:description" content="The first benchmark for phage genome understanding by LLMs — 5,600 samples, 5 tasks, 3 stages. ACL 2026 Findings.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="images/fig1_.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PhageBench: Can LLMs Understand Raw Bacteriophage Genomes?">
+    <meta name="twitter:description" content="The first benchmark for phage genome understanding by LLMs. ACL 2026 Findings.">
+    <link rel="icon" type="image/png" href="images/bacteriophage.png">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============================ HERO ============================ -->
+    <header class="header-container">
+        <div class="header-content">
+            <div class="venue-badge">🎉 Accepted to ACL&nbsp;2026 Findings</div>
+            <h1 class="paper-title">
+                <span class="paper-title-icon">
+                    <img src="images/bacteriophage.png" alt="phage" class="phage-icon">
+                </span>
+                <span class="paper-title-main">PhageBench</span>
+                <span class="paper-title-sub">Can LLMs Understand Raw Bacteriophage Genomes?</span>
+            </h1>
+            <p class="paper-tagline"><em>All The World's A Phage.</em></p>
+            <div class="button-container">
+                <a href="https://arxiv.org/abs/2604.05775" class="button" target="_blank" rel="noopener noreferrer">
+                    <span class="button-icon">📄</span> Paper
+                </a>
+                <a href="https://github.com/YusenHou519/Phage-Bench" class="button" target="_blank" rel="noopener noreferrer">
+                    <span class="button-icon">💻</span> Code
+                </a>
+                <a href="https://github.com/YusenHou519/Phage-Bench/tree/master/data" class="button" target="_blank" rel="noopener noreferrer">
+                    <span class="button-icon">🧬</span> Data
+                </a>
+            </div>
+        </div>
+        <div class="header-image">
+            <img src="images/fig1_.png" alt="PhageBench overview: five genome-understanding tasks posed to general-purpose LLMs" class="teaser-image">
+        </div>
+    </header>
+
+    <!-- ============================ BYLINE ============================ -->
+    <div class="byline">
+        <div class="byline-container">
+            <div class="byline-column">
+                <h3>Authors</h3>
+                <p>Yusen Hou<sup>1,&dagger;</sup>, Weicai Long<sup>1,&dagger;</sup>, Haitao Hu<sup>1</sup>,</p>
+                <p>Houcheng Su<sup>1</sup>, Junning Feng<sup>1</sup>,
+                   <a class="author-link" href="mailto:yanlinzhang@hkust-gz.edu.cn">Yanlin Zhang<sup>1,*</sup></a></p>
+            </div>
+            <div class="byline-column">
+                <h3>Affiliation</h3>
+                <p><sup>1</sup> The Hong Kong University of Science<br>and Technology (Guangzhou)</p>
+            </div>
+            <div class="byline-column">
+                <h3>Notes</h3>
+                <p>&dagger; Co-first authors</p>
+                <p>* Corresponding author</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================ ARTICLE ============================ -->
+    <main class="article">
+        <!-- Sticky table of contents -->
+        <aside class="contents">
+            <nav>
+                <h4>Contents</h4>
+                <a href="#abstract">Abstract</a>
+                <a href="#challenge">Why Phages?</a>
+                <a href="#construction">Benchmark Construction</a>
+                <a href="#dataset">Dataset &amp; Tasks</a>
+                <a href="#results">Results</a>
+                <a href="#findings">Key Findings</a>
+                <a href="#bibtex">BibTeX</a>
+            </nav>
+        </aside>
+
+        <div class="content">
+
+            <!-- ----- Abstract ----- -->
+            <section id="abstract">
+                <h2>Abstract</h2>
+                <p>
+                    Bacteriophages, often referred to as the <em>dark matter of the biosphere</em>,
+                    play a critical role in regulating microbial ecosystems and in antibiotic
+                    alternatives. Thus, accurate interpretation of their genomes holds significant
+                    scientific and practical value. While general-purpose Large Language Models
+                    (LLMs) excel at understanding biological texts, their ability to directly
+                    interpret raw nucleotide sequences and perform biological reasoning remains
+                    underexplored.
+                </p>
+                <p>
+                    To address this, we introduce <strong>PhageBench</strong>, the first benchmark
+                    designed to evaluate phage genome understanding by mirroring the workflow of
+                    bioinformatics experts. The dataset contains <strong>5,600 high-quality
+                    samples</strong> covering <strong>five core tasks</strong> across three stages:
+                    <em>Screening</em>, <em>Quality Control</em>, and <em>Phenotype Annotation</em>.
+                    Our evaluation of eight LLMs reveals that general-purpose reasoning models
+                    significantly outperform random baselines in phage contig identification and host
+                    prediction, demonstrating promising potential for genomic understanding. However,
+                    they exhibit significant limitations in complex reasoning tasks involving
+                    long-range dependencies and fine-grained functional localization. These findings
+                    highlight the necessity of developing next-generation models with enhanced
+                    reasoning capabilities for biological sequences.
+                </p>
+            </section>
+
+            <!-- ----- Why Phages ----- -->
+            <section id="challenge">
+                <h2>Why Phages? The Ideal Testbed</h2>
+                <p>
+                    The intersection of AI and biology is shifting from text analysis to direct
+                    genomic decoding. While specialized Genomic Foundation Models (GFMs) require
+                    massive pre-training on DNA, PhageBench investigates whether general-purpose LLMs
+                    can leverage their inherent reasoning to interpret raw genomes <em>zero-shot</em>.
+                    We propose bacteriophages as the ideal testbed for three reasons:
+                </p>
+                <div class="reason-grid">
+                    <div class="reason-card">
+                        <div class="reason-emoji">📏</div>
+                        <h3>Perfect Scale</h3>
+                        <p>Phage genomes (typically 3&ndash;150&nbsp;kb) align well with the context
+                           windows of modern LLMs, making them ideal for non-natural-language
+                           long-context reasoning.</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-emoji">🧩</div>
+                        <h3>Linguistic Structure</h3>
+                        <p>Unlike complex eukaryotic genomes, phages exhibit a dense, linear syntax
+                           similar to natural language, enabling reasoning-based functional prediction
+                           even when sequence homology is low.</p>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-emoji">🔬</div>
+                        <h3>Scientific Impact</h3>
+                        <p>As the dark matter of the biosphere, accurate phage annotation is critical
+                           for scientific discovery, food engineering, and phage therapy as an
+                           alternative to antibiotics.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ----- Benchmark Construction ----- -->
+            <section id="construction">
+                <h2>Benchmark Construction</h2>
+                <p>
+                    PhageBench is built through a rigorous three-stage pipeline. We collect
+                    high-confidence phage genomes from authoritative databases
+                    (<strong>RefSeq</strong>, <strong>PhageScope</strong>), construct task-specific
+                    samples by controlled sampling and mixing, and engineer standardized
+                    multiple-choice instructions that ensure reliable parsing and evaluation.
+                </p>
+                <figure class="shaded-figure">
+                    <img src="images/fig2_.png" alt="Three-step PhageBench construction pipeline: data collection, task-specific construction, and instruction engineering">
+                    <figcaption>
+                        The PhageBench construction pipeline. <strong>Step&nbsp;1</strong> &mdash;
+                        collect and quality-control phage genomes from public databases.
+                        <strong>Step&nbsp;2</strong> &mdash; build task-specific data for each of the
+                        five tasks via controlled sampling and mixing. <strong>Step&nbsp;3</strong>
+                        &mdash; instruction engineering into a standardized multiple-choice format
+                        with balanced sample ratios and reliable ground truth.
+                    </figcaption>
+                </figure>
+                <p>
+                    Every sample is standardized to a single schema &mdash; an <code>id</code>, a
+                    natural-language <code>question</code>, the raw DNA <code>sequence</code>,
+                    multiple-choice <code>choices</code>, the ground-truth <code>answer</code>, and
+                    rich <code>metadata</code> (sequence length, GC content, source, completeness,
+                    and more) &mdash; so that any LLM can be evaluated through a uniform interface.
+                </p>
+            </section>
+
+            <!-- ----- Dataset & Tasks ----- -->
+            <section id="dataset">
+                <h2>Dataset &amp; Tasks</h2>
+                <p>
+                    PhageBench contains <strong>5,600 samples</strong> spanning five core tasks,
+                    grouped into the three stages of a real bioinformatics annotation workflow.
+                    Sequences range from <strong>0.5&nbsp;kb to 50&nbsp;kb</strong> with a balanced
+                    answer distribution to discourage shortcut guessing.
+                </p>
+
+                <figure>
+                    <img src="images/fig3_data_overall.png" alt="Donut chart of PhageBench sample distribution across the five tasks" class="donut-figure">
+                    <figcaption>
+                        Sample distribution across the five PhageBench tasks (5,600 samples total).
+                    </figcaption>
+                </figure>
+
+                <!-- Stage 1 -->
+                <div class="stage-block stage-screening">
+                    <span class="stage-label">Stage 1 &middot; Screening</span>
+                    <div class="task-card">
+                        <div class="task-head">
+                            <span class="task-num">T1</span>
+                            <span class="task-name">Phage Contig Identification</span>
+                            <span class="task-count">1,200 samples</span>
+                        </div>
+                        <p class="task-q">&ldquo;Is the following nucleotide sequence derived from a
+                           bacteriophage genome?&rdquo; &mdash; distinguishing phages from
+                           environmental noise such as bacteria and plasmids.</p>
+                    </div>
+                </div>
+
+                <!-- Stage 2 -->
+                <div class="stage-block stage-qc">
+                    <span class="stage-label">Stage 2 &middot; Quality Control</span>
+                    <div class="task-card">
+                        <div class="task-head">
+                            <span class="task-num">T2</span>
+                            <span class="task-name">Contamination Detection</span>
+                            <span class="task-count">1,200 samples</span>
+                        </div>
+                        <p class="task-q">&ldquo;Does the following contig contain any DNA originating
+                           from a non-phage host genome?&rdquo; &mdash; identifying host signals and
+                           mis-binning.</p>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-head">
+                            <span class="task-num">T3</span>
+                            <span class="task-name">Completeness Estimation</span>
+                            <span class="task-count">1,000 samples</span>
+                        </div>
+                        <p class="task-q">&ldquo;What is the estimated genome completeness category of
+                           the following bacteriophage sequence?&rdquo; &mdash; assessing genome
+                           integrity from sequence structure.</p>
+                    </div>
+                </div>
+
+                <!-- Stage 3 -->
+                <div class="stage-block stage-phenotype">
+                    <span class="stage-label">Stage 3 &middot; Phenotype Annotation</span>
+                    <div class="task-card">
+                        <div class="task-head">
+                            <span class="task-num">T4</span>
+                            <span class="task-name">Lifestyle Classification</span>
+                            <span class="task-count">1,000 samples</span>
+                        </div>
+                        <p class="task-q">&ldquo;What is the lifestyle of the phage represented by the
+                           following genome sequence?&rdquo; &mdash; virulent vs. temperate.</p>
+                    </div>
+                    <div class="task-card">
+                        <div class="task-head">
+                            <span class="task-num">T5</span>
+                            <span class="task-name">Host Prediction</span>
+                            <span class="task-count">1,200 samples</span>
+                        </div>
+                        <p class="task-q">&ldquo;Which host family is the following phage most likely
+                           to infect?&rdquo; &mdash; predicting host range from genomic signals.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ----- Results ----- -->
+            <section id="results">
+                <h2>Results</h2>
+                <p>
+                    Model accuracy (%) on PhageBench under the zero-shot Chain-of-Thought (CoT)
+                    setting. <strong>Bold</strong> marks the best per column;
+                    <u>underline</u> marks the second best. <em>Avg.</em> is the mean across all
+                    five tasks.
+                </p>
+                <div class="table-scroll">
+                <table class="display-table">
+                    <thead>
+                        <tr>
+                            <th rowspan="2" class="left">Model</th>
+                            <th>T1<br><span class="th-sub">Identification</span></th>
+                            <th>T2<br><span class="th-sub">Contamination</span></th>
+                            <th>T3<br><span class="th-sub">Completeness</span></th>
+                            <th>T4<br><span class="th-sub">Lifestyle</span></th>
+                            <th>T5<br><span class="th-sub">Host Pred.</span></th>
+                            <th rowspan="2">Avg.</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="group-row"><td colspan="7"><em>Non-reasoning</em></td></tr>
+                        <tr>
+                            <td class="left">GPT-4o-mini</td>
+                            <td>50.00</td><td>50.08</td><td>24.50</td><td>48.40</td><td>27.75</td><td>40.15</td>
+                        </tr>
+                        <tr>
+                            <td class="left">LLaMA&nbsp;4</td>
+                            <td>53.25</td><td>49.58</td><td>27.10</td><td><u>54.50</u></td><td>28.58</td><td>42.60</td>
+                        </tr>
+                        <tr>
+                            <td class="left">Qwen3-235b</td>
+                            <td>51.58</td><td>49.33</td><td>25.40</td><td>52.00</td><td>28.58</td><td>41.38</td>
+                        </tr>
+                        <tr class="group-row"><td colspan="7"><em>Reasoning</em></td></tr>
+                        <tr>
+                            <td class="left">GPT-OSS-120b</td>
+                            <td>50.08</td><td>46.58</td><td>24.20</td><td>49.50</td><td>41.00</td><td>42.27</td>
+                        </tr>
+                        <tr>
+                            <td class="left">GPT-5.2</td>
+                            <td><u>70.75</u></td><td><u>54.17</u></td><td><strong>43.10</strong></td><td>51.50</td><td>35.25</td><td><u>50.95</u></td>
+                        </tr>
+                        <tr>
+                            <td class="left">Gemini-3-flash</td>
+                            <td><strong>70.83</strong></td><td><strong>58.83</strong></td><td>32.10</td><td><strong>57.40</strong></td><td><strong>62.50</strong></td><td><strong>56.33</strong></td>
+                        </tr>
+                        <tr>
+                            <td class="left">Claude-sonnet-4.5</td>
+                            <td>57.92</td><td>51.83</td><td><u>35.50</u></td><td>50.00</td><td><u>44.17</u></td><td>47.88</td>
+                        </tr>
+                        <tr>
+                            <td class="left">Qwen3-max</td>
+                            <td>57.42</td><td>52.58</td><td>33.80</td><td>49.90</td><td>34.75</td><td>45.69</td>
+                        </tr>
+                        <tr class="group-row"><td colspan="7"><em>Baseline</em></td></tr>
+                        <tr class="baseline-row">
+                            <td class="left">Random</td>
+                            <td>50.00</td><td>50.00</td><td>25.00</td><td>50.00</td><td>25.00</td><td>40.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+                <figcaption class="table-caption">
+                    Accuracy (%) of eight LLMs on the five PhageBench tasks (zero-shot CoT).
+                </figcaption>
+            </section>
+
+            <!-- ----- Key Findings ----- -->
+            <section id="findings">
+                <h2>Key Findings</h2>
+                <ul class="findings-list">
+                    <li>
+                        <strong>Reasoning helps &mdash; but only so far.</strong> Reasoning models
+                        clearly beat non-reasoning models and the random baseline, yet even the best
+                        model (Gemini-3-flash, <strong>56.33%</strong> average) is far from reliable
+                        on raw-genome understanding.
+                    </li>
+                    <li>
+                        <strong>Some signal is recoverable from raw DNA.</strong> On phage contig
+                        identification (T1) and host prediction (T5), top models substantially exceed
+                        the random baseline, showing genuine promise for genomic reasoning.
+                    </li>
+                    <li>
+                        <strong>Completeness estimation is the hardest.</strong> Most models hover
+                        near or below the random 25% on T3, exposing weakness at long-range
+                        dependencies and fine-grained functional localization.
+                    </li>
+                    <li>
+                        <strong>A clear call to action.</strong> The gap motivates next-generation
+                        models with stronger reasoning capabilities tailored to biological sequences.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- ----- BibTeX ----- -->
+            <section id="bibtex">
+                <h2>BibTeX</h2>
+                <pre class="bibtex"><code>@article{hou2026phagebench,
+  title={PhageBench: Can LLMs Understand Raw Bacteriophage Genomes?},
+  author={Hou, Yusen and Long, Weicai and Hu, Haitao and Su, Houcheng and Feng, Junning and Zhang, Yanlin},
+  journal={arXiv preprint arXiv:2604.05775},
+  year={2026}
+}</code></pre>
+            </section>
+        </div>
+    </main>
+
+    <!-- ============================ FOOTER ============================ -->
+    <footer class="site-footer">
+        <p>PhageBench &middot; ACL 2026 Findings &middot;
+           The Hong Kong University of Science and Technology (Guangzhou)</p>
+        <p class="footer-sub"><em>All The World's A Phage.</em></p>
+    </footer>
+
+    <a href="#" class="back-to-top" aria-label="Back to top">&uarr;</a>
+
+    <script src="script.js"></script>
+</body>
+</html>
