@@ -2,6 +2,14 @@
 
 ### **🎉🎉🎉 PhageBench was accepted to ACL 2026 Findings! 🤖 meets 🦠!**
 
+<p align="center">
+  <a href="https://arxiv.org/abs/2604.05775"><img src="https://img.shields.io/badge/arXiv-2604.05775-b31b1b.svg" alt="arXiv"></a>
+  <a href="https://yusenhou519.github.io/Phage-Bench/"><img src="https://img.shields.io/badge/🌐_Project-Page-1f72b8.svg" alt="Project Page"></a>
+  <a href="https://github.com/YusenHou519/Phage-Bench"><img src="https://img.shields.io/badge/💻_Code-GitHub-24292e.svg" alt="Code"></a>
+</p>
+
+📄 **Paper:** [arXiv:2604.05775](https://arxiv.org/abs/2604.05775) &nbsp;|&nbsp; 🌐 **Project Page:** [yusenhou519.github.io/Phage-Bench](https://yusenhou519.github.io/Phage-Bench/)
+
 <code>All The World's A Phage.</code>
 
 **PhageBench** confronts general-purpose Large Language Models (LLMs) with a fundamental question: **Can models trained on natural language understand the language of life?**
